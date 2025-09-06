@@ -174,3 +174,4 @@ app.MapPut("/tags/{id:int}", async (int id, [FromBody] TagEntity input, TaskDb d
 });
 
 app.Run();
+public partial class Program { } // enables WebApplicationFactory<Program>
