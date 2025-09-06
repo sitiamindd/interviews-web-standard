@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Api.Models;
-using Microsoft.AspNetCore.Http.Json;
+using Microsoft.AspNetCore.Http.Json;   
 using System.Text.Json.Serialization;
 
 // Alias your entity type so it never conflicts with System.Threading.Tasks.Task
@@ -10,6 +10,19 @@ using TaskEntity = Api.Models.Task;
 using TagEntity = Api.Models.Tag;
 var builder = WebApplication.CreateBuilder(args);
 
+// Allow Nuxt dev server to call the API
+builder.Services.AddCors(o =>
+{
+    o.AddPolicy("frontend", p => p
+        .WithOrigins("http://localhost:3000", "http://127.0.0.1:3000")
+        .AllowAnyHeader()
+        .AllowAnyMethod());
+});
+
+builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
+{
+    options.SerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+});
 
 // EF Core + SQLite
 builder.Services.AddDbContext<TaskDb>(options =>
@@ -20,6 +33,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseCors("frontend");  
 
 // Ensure DB/tables exist
 using (var scope = app.Services.CreateScope())
@@ -144,6 +159,16 @@ app.MapDelete("/tags/{id:int}", async (int id, TaskDb db) =>
     if (tag is null) return Results.NotFound();
 
     db.Tags.Remove(tag);
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+});
+
+// PUT /tags/{id}
+app.MapPut("/tags/{id:int}", async (int id, [FromBody] TagEntity input, TaskDb db) =>
+{
+    var tag = await db.Tags.FindAsync(id);
+    if (tag is null) return Results.NotFound();
+    tag.Name = input.Name;
     await db.SaveChangesAsync();
     return Results.NoContent();
 });
