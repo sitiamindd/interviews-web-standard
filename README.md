@@ -14,17 +14,17 @@ set ASPNETCORE_URLS=http://localhost:5113 && dotnet run
 
 To run this solution, you will need to run the API and CLIENT in a separate CMD.
 # Step to run the API
-cd api
-dotnet run
+1. cd api
+2. dotnet run
 
 # Step to run the Client
-cd client
-npm install
-npm run dev
+1. cd client
+2. npm install
+3. npm run dev
 
 # Step to run the Api.Test
-cd Api.Test
-dotnet restore
-dotnet build
-dotnet test
+1. cd Api.Test
+2. dotnet restore
+3. dotnet build
+4. dotnet test
 
