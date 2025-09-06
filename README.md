@@ -1,11 +1,12 @@
 # Web Development Interview Test
 
 # Repo Structure
-
+``` tree
 .
 |--api/         # ASP.NET Core API. Handle backend
 |--client/      # Nuxt 3 app
 |--Api.Test/    #xUnit test for API
+
 
 # Note
 dotnet api runs in this solution is using http://localhost:5113 . When starting the api, set the port to be 5113 using cmd as follows:
