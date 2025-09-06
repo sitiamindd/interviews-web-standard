@@ -1,0 +1,41 @@
+# ---- OS junk
+.DS_Store
+Thumbs.db
+
+# ---- Dotnet / API
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.swp
+
+# SQLite files (keep migrations, ignore DB files)
+*.db
+*.db-shm
+*.db-wal
+
+# Logs & test outputs
+logs/
+*.log
+TestResults/
+*.trx
+*.coverage
+coverage/
+coverage*.json
+
+# Optional: if you keep local-only config variants
+appsettings.*.local.json
+
+# ---- Nuxt / Node
+client/node_modules/
+client/.nuxt/
+client/.output/
+client/.nitro/
+client/.cache/
+client/dist/
+
+# Env files (commit an example instead)
+client/.env
+client/.env.*
+!.env.example
